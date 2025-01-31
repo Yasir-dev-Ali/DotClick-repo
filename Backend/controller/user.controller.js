@@ -7,8 +7,7 @@ import sendEmail from '../utils/sendEmail.js';
 
 // JWT Secret Key
 const JWT_SECRET = process.env.JWT_SECRET;
-
-// ✅ 1. Register a new user
+//  Register a new user
 export const register = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -20,17 +19,17 @@ export const register = async (req, res) => {
 
         user = new User({ name, email, password });
 
-        // 🔹 Hash Password
+        //  Hash Password
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
         
 
-        // 🔹 Generate JWT Token
+        //  Generate JWT Token
         const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
         console.log("Generated Token:", token); // 🔥 Debugging Line
 
-        // 🔹 Send Verification Email
+        //  Send Verification Email
         const verifyUrl = `http://localhost:3000/api/auth/verify-email?token=${token}`;
 
         await sendEmail({
@@ -44,12 +43,12 @@ export const register = async (req, res) => {
         res.status(201).json({ message: "Verification email sent. Please check your inbox." });
 
     } catch (error) {
-        console.error(error); // 🔥 Debugging Line
+        console.error(error); // Debugging Line
         res.status(500).json({ message: "Server error", error });
     }
 };
 
-// ✅ 2. Login user with JWT authentication
+//  Login user with JWT authentication
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -83,7 +82,7 @@ export const login = async (req, res) => {
     }
 };
 
-// ✅ 3. Verify Email
+//  Verify Email
 export const verifyEmail = async (req, res) => {
     try {
         const { token } = req.query;
@@ -104,7 +103,7 @@ export const verifyEmail = async (req, res) => {
     }
 };
 
-// ✅ 4. Forgot Password - Send Reset Link
+//  Forgot Password - Send Reset Link
 export const forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
