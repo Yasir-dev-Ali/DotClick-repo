@@ -8,7 +8,13 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',  // Allow requests from the React frontend
+    methods: 'GET,POST',  // Allow specific HTTP methods
+    allowedHeaders: 'Content-Type,Authorization',  // Allow specific headers
+  }));
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
