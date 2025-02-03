@@ -1,33 +1,43 @@
 import React from 'react';
 import { Container, Row, Col, Nav, Navbar, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const navigate = useNavigate(); // Corrected useNavigate hook
+
+  const handleLogout = () => {
+    // Remove token from local storage
+    localStorage.removeItem('token');
+
+    // Redirect to the home page
+    navigate('/');
+  };
+
   return (
     <Container fluid>
       <Row>
         {/* Sidebar */}
-        <Col md={2} className="bg-dark text-white vh-100">
-          <Navbar.Brand href="/" className="text-center text-white mt-3 mb-4">
+        <Col md={2} className="bg-dark text-white vh-100 p-3">
+          <Navbar.Brand className="text-center text-white mt-3 mb-4">
             Dashboard
           </Navbar.Brand>
-          <Nav defaultActiveKey="/home" className="flex-column">
+          <Nav defaultActiveKey="/dashboard" className="flex-column">
             <Nav.Link as={Link} to="/dashboard" className="text-white">Dashboard</Nav.Link>
             <Nav.Link as={Link} to="/profile" className="text-white">Profile</Nav.Link>
             <Nav.Link as={Link} to="/settings" className="text-white">Settings</Nav.Link>
-            <Nav.Link as={Link} to="/logout" className="text-white">Logout</Nav.Link>
+            <Button variant="danger" className="mt-3" onClick={handleLogout}>Logout</Button>
           </Nav>
         </Col>
 
         {/* Main Content Area */}
         <Col md={10}>
           {/* Topbar */}
-          <Navbar bg="light" expand="lg" className="shadow-sm">
+          <Navbar bg="light" expand="lg" className="shadow-sm p-3">
             <Navbar.Collapse>
               <Row className="w-100">
                 <Col className="d-flex justify-content-between align-items-center">
                   <h2>Welcome to the Dashboard</h2>
-                  <Button variant="outline-danger">Logout</Button>
+                  <Button variant="outline-danger" onClick={handleLogout}>Logout</Button>
                 </Col>
               </Row>
             </Navbar.Collapse>
@@ -55,7 +65,6 @@ const Dashboard = () => {
                 </div>
               </Col>
             </Row>
-            {/* Add more widgets or content sections */}
           </Container>
         </Col>
       </Row>
