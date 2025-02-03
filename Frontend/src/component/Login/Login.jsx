@@ -61,8 +61,11 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
+              <div className='d-flex justify-content-between align-items-center'>
+                <Link to="/forgot-password">Forgot Password?</Link>
+              </div>
 
-              <Button variant="primary" type="submit" className="w-100">
+              <Button variant="primary" type="submit" className="w-100 mt-3">
                 Login
               </Button>
               <div className="mt-3">
